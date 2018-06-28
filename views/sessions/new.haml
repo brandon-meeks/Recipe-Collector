@@ -1,0 +1,15 @@
+.row
+  .col-sm-4.col-sm-offset-4
+    #login_form
+
+      %h2.text-center User login
+
+      %form{:action => "login", :method => "post"}
+        .form-group
+          %label{:for => "username"}Username:
+          %input{:type => "text", :id => "username", :name => "username", :class => "form-control", :required => true}
+        .form-group
+          %label{:for => "password"}Password:
+          %input{:type => "password", :id => "password", :name => "password", :class => "form-control", :required => true}
+        .form-group
+          %input{:type => "submit", :value => "Login", :class => "btn btn-block btn-primary"}

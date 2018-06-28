@@ -1,0 +1,10 @@
+
+%div
+  %h2.page-header= @post.title
+
+
+  %p.text-muted
+    = @post.author
+    = @post.created_at.strftime('%B %d, %Y')
+
+  %p= @post.body

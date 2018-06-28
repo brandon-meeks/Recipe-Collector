@@ -1,0 +1,22 @@
+%a{:href => "users/new"}
+  %i.fa.fa-plus
+    Create User
+
+%div
+  %table.table
+    %th User ID
+    %th username
+    %th Email
+    %th Created At
+    %th Actions
+    - @users.each do |user|
+      %tr
+        %td= user.id
+        %td= user.username
+        %td= user.email
+        %td= user.created_at.strftime('%e-%b-%Y')
+        %td
+          %a{:href => "/users/#{user.id}"}
+            %i.fa.fa-edit
+          %a{:href => "/users/#{user.id}/delete"}
+            %i.fa.fa-trash-alt

@@ -1,0 +1,15 @@
+#user-info
+
+  %h2 User Info
+
+  %form{:action => "/users", :method => "post"}
+    .form-group
+      %label{:for => "username"}Username:
+      %input.form-control{:type => "text", :id => "username", :name => "username", :value => "#{@user.username}"}
+      %input{:type => "number", :id => "user_id", :name => "user_id", :value => "#{@user.id}", :hidden => true}
+    .form-group
+      %label{:for => "email"}Email:
+      %input.form-control{:type => "text", :id => "username", :name => "email", :value => "#{@user.email}", :disabled => true}
+    .form-group
+      %input{:type => "submit", :value => "Update User", :class => "btn btn-primary"}
+      %a{:href => "/users", :class => "btn btn-default"}Cancel

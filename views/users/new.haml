@@ -1,0 +1,12 @@
+%form{:action => "/users/new", :method => "post"}
+  .form-group
+    %label{:for => "username"}Username:
+    %input{:type => "text", :id => "username", :name => "username", :required => true, :class => "form-control"}
+  .form-group
+    %label{:for => "email"}Email:
+    %input{:type => "email", :id => "email", :name => "email", :required => true, :class => "form-control"}
+  .form-group
+    %label{:for => "password"}Password:
+    %input{:type => "password", :id => "password", :name => "password", :required => true, :class => "form-control"}
+  .form-group
+    %input{:type => "submit", :id => "submit", :name => "submit", :class => "btn btn-block btn-primary"}
