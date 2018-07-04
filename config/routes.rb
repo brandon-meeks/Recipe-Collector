@@ -1,7 +1,7 @@
-require_relative "../models/models"
+require_relative '../models/models'
 
 get '/' do
-  @page_title = ""
+  @page_title = ''
   haml :index, layout: :"layouts/main"
 end
 
@@ -13,15 +13,19 @@ end
 
 # Create new User routes
 get '/users/new' do
-  @page_title = "New User Signup"
+  @page_title = 'New User Signup'
   haml :"users/new", layout: :"layouts/main"
 end
 
 post '/users/new' do
-  user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
+  user = User.new(
+    username: params[:username],
+    email: params[:email],
+    password: params[:password]
+  )
 
   if user.save
-    redirect "/users"
+    redirect '/users'
   else
     redirect 'users/new'
   end
@@ -35,7 +39,7 @@ end
 
 post '/users' do
   user = User.find(params[:user_id])
-  user.update(:username => params[:username])
+  user.update(username: params[:username])
 end
 
 # Delete User route
@@ -45,7 +49,7 @@ get '/users/:id/delete' do
   redirect '/users'
 end
 
-#Session routes
+# Session routes
 get '/login' do
   haml :"sessions/new", layout: :"layouts/main"
 end
@@ -54,7 +58,7 @@ post '/login' do
   authorized_user = User.find_by(username: params[:username])
   if authorized_user && authorized_user.authenticate(params[:password])
     session[:user_id] = authorized_user.id
-    flash[:success] = "You have successfully signed in"
+    flash[:success] = 'You have successfully signed in'
     redirect '/'
   else
     redirect '/login'
@@ -63,7 +67,7 @@ end
 
 get '/logout' do
   session[:user_id] = nil
-  flash[:success] = "You have logged out."
+  flash[:success] = 'You have logged out.'
   redirect '/'
 end
 
@@ -80,19 +84,23 @@ get '/users/:id/recipes/new' do
 end
 
 post '/users/:id/recipes' do
-  user = User.find{session[:user_id]}
-  recipe = Recipe.create!(:title => params[:title], :author => params[:author], :user_id => params[:user_id], :procedure => params[:procedure])
-  # recipe.ingredients.create(:name => params[:ingredient][:ing_name], :quantity => params[:ingredient][:ing_qty], :qty_type => params[:ingredient][:ing_type])
+  user = User.find { session[:user_id] }
+  recipe = Recipe.create!(
+    title: params[:title],
+    author: params[:author],
+    user_id: params[:user_id],
+    procedure: params[:procedure]
+  )
   params[:recipe][:ingredient].each do |ing_data|
     ingredient = Ingredient.new(ing_data)
     ingredient.recipe_id = recipe.id
     ingredient.save
-  end|
+  end
   if recipe.save
-    flash[:sucess] = "Recipe sucessfully saved"
+    flash[:sucess] = 'Recipe sucessfully saved'
     redirect "/users/#{user.id}/recipes"
   else
-    flash[:warning] = "Unable to create recipe. Please try again."
+    flash[:warning] = 'Unable to create recipe. Please try again.'
     redirect "/users/#{user.id}/recipes/new"
   end
 end
@@ -104,9 +112,9 @@ get '/users/:id/recipes/:recipe_id' do
 end
 
 get '/users/:id/recipes/:recipe_id/delete' do
-  user = User.find{session[:user_id]}
+  user = User.find { session[:user_id] }
   recipe = Recipe.find(params[:recipe_id])
   recipe.delete
-  flash[:success] = "Recipes successfully deleted"
+  flash[:success] = 'Recipes successfully deleted'
   redirect "users/#{user.id}/recipes"
 end

@@ -4,8 +4,8 @@ ActiveRecord::Schema.define do
   create_table :users, force: :cascade do |t|
     t.string    :username
     t.string    :email
-    t.text    :password_digest
-    t.string    :profile_photo, :default => ""
+    t.text      :password_digest
+    t.string    :profile_photo, :default => ''
     t.datetime  :created_at
   end
 
@@ -31,6 +31,4 @@ ActiveRecord::Schema.define do
   end
 
   add_index :ingredients, :recipe_id
-
-
 end
