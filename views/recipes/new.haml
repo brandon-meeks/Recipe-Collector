@@ -1,0 +1,38 @@
+%h2 New Recipe
+
+%form{:action => "/users/#{@user.id}/recipes", :method => "post"}
+  .form-group
+    %label(for="title")Title:
+    %input{:type => "text", :name => "title", :id => "title", :class => "form-control"}
+  .form-group
+    %label(for="author")Author:
+    %input{:type => "text", :name => "author", :id => "author", :value =>"#{@user.username}", :class => "form-control"}
+    %input{:name => "user_id", :id => "user_id", :value => "#{@user.id}", :hidden => true}
+  .form-group
+    %label{:for => "image_url"}Image:
+    %input{:type => "text", :name => "image_url", :id => "image_url", :class => "form-control"}
+  .form-group
+    %h4 Ingredients:
+    - 2.times do
+      .row
+        .col-sm-7
+          %label{:for => "ing_name"} Name:
+          %input{:type => "text", :name => "recipe[ingredient][][name]", :id => "ing_name", :placeholder => "Flour", :class => "form-control"}
+        .col-sm-2
+          %label{:for => "ing_qty"} Quantity:
+          %input{:type => "text", :name => "recipe[ingredient][][quantity]", :id => "ing_qty", :class => "form-control"}
+        .col-sm-3
+          %label{:for => "recipe[ingredient][][qty_type]"} Quantity Type:
+          %select.form-control
+            %option{:value => "cups"} Cups
+            %option{:value => "oz"} Ounces
+            %option{:value => "lbs"} Lbs
+            %option{:value => "grams"} Grams
+            %option{:value => "kilograms"} Kilograms
+            %options{:value => "liters"} Liters
+  .form-group
+    %label(for="procedure")Procedure:
+    %textarea{:name => "procedure", :id => "procedure", :rows => 10, :cols => 10, :class => "form-control"}
+  .form-group
+    %input{:type => "submit", :value => "Create Recipe", :class => "btn btn-primary"}
+    %a{:href => "/users/#{session[:user_id]}/recipes", :class => "btn btn-default"}Cancel

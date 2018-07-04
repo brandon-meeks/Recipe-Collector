@@ -1,0 +1,20 @@
+#recipe
+  %h2.page-header
+    = @recipe.title
+  %p.text-muted 
+    Written By:
+    = @recipe.author
+  %p.text-muted
+    Created:
+    = @recipe.created_at.strftime('%e-%b-%Y')
+    #ingredients
+      %ul
+      - @ingredients.each do |ing|
+        %li= ing.name
+        %li= ing.quantity
+        %li= ing.qty_type
+
+    #procedure
+      %p= @recipe.procedure
+
+%a{:href => "/users/#{session[:user_id]}/recipes", :class => "btn btn-default"} Back to Recipes

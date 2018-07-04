@@ -30,9 +30,7 @@ class App < Sinatra::Application
   require "./config/routes"
 
 configure :development, :production do
-  logger = Logger.new(STDOUT)
-  logger.level = Logger::DEBUG if development?
-  set :logger, logger
+  ActiveRecord::Base.logger = Logger.new(STDOUT)
 end
 
 end

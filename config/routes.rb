@@ -66,3 +66,47 @@ get '/logout' do
   flash[:success] = "You have logged out."
   redirect '/'
 end
+
+# Recipe routes
+get '/users/:id/recipes' do
+  @user = User.find_by(id: session[:user_id])
+  @recipes = Recipe.where(user_id: @user.id)
+  haml :"recipes/index", layout: :"layouts/main"
+end
+
+get '/users/:id/recipes/new' do
+  @user = User.find_by(id: session[:user_id])
+  haml :"recipes/new", layout: :"layouts/main"
+end
+
+post '/users/:id/recipes' do
+  user = User.find{session[:user_id]}
+  recipe = Recipe.create!(:title => params[:title], :author => params[:author], :user_id => params[:user_id], :procedure => params[:procedure])
+  # recipe.ingredients.create(:name => params[:ingredient][:ing_name], :quantity => params[:ingredient][:ing_qty], :qty_type => params[:ingredient][:ing_type])
+  params[:recipe][:ingredient].each do |ing_data|
+    ingredient = Ingredient.new(ing_data)
+    ingredient.recipe_id = recipe.id
+    ingredient.save
+  end|
+  if recipe.save
+    flash[:sucess] = "Recipe sucessfully saved"
+    redirect "/users/#{user.id}/recipes"
+  else
+    flash[:warning] = "Unable to create recipe. Please try again."
+    redirect "/users/#{user.id}/recipes/new"
+  end
+end
+
+get '/users/:id/recipes/:recipe_id' do
+  @recipe = Recipe.find(params[:recipe_id])
+  @ingredients = Ingredient.where(recipe_id: @recipe.id)
+  haml :"recipes/show", layout: :"layouts/main"
+end
+
+get '/users/:id/recipes/:recipe_id/delete' do
+  user = User.find{session[:user_id]}
+  recipe = Recipe.find(params[:recipe_id])
+  recipe.delete
+  flash[:success] = "Recipes successfully deleted"
+  redirect "users/#{user.id}/recipes"
+end

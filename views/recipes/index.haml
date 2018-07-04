@@ -1,0 +1,26 @@
+%h2 
+  = @user.username
+  Recipes
+
+%a{:href => "recipes/new"}
+  %i.fa.fa-plus
+  Create Recipe
+
+#recipes
+  %table.table
+    %th ID
+    %th Recipe Title
+    %th Created At
+    %th Actions
+    - @recipes.each do |recipe|
+      %tr
+        %td= recipe.id
+        %td
+          %a{:href => "recipes/#{recipe.id}"}
+            = recipe.title
+        %td= recipe.created_at.strftime('%e-%b-%Y')
+        %td
+          %a{:href => "/users/#{@user.id}/recipes/#{recipe.id}/edit"}
+            %i.fa.fa-edit
+          %a{:href => "/users/#{@user.id}/recipes/#{recipe.id}/delete", :onclick => "return confirm('Are you sure you want to delete this item?');"}
+            %i.fa.fa-trash-alt

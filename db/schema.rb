@@ -27,7 +27,7 @@ ActiveRecord::Schema.define do
     t.integer   :recipe_id, null: false
     t.string    :name
     t.float     :quantity
-    t.string    :type
+    t.string    :qty_type
   end
 
   add_index :ingredients, :recipe_id
