@@ -1,25 +1,34 @@
 #recipe
   %h2.page-header
     = @recipe.title
+
   %p.text-muted 
     Written By:
     = @recipe.author
   %p.text-muted
     Created:
     = @recipe.created_at.strftime('%e-%b-%Y')
-    #ingredient-listing
-      %table.table-condensed
-        %th Ingredient
-        %th Quantity
-        %th Measurement
-        - @ingredients.each do |ing|
-          %tr
-            %td= ing.name
-            %td= ing.quantity
-            %td= ing.qty_type
+  
+  .row
+    - if @recipe.image.present?
+      .col-sm-6
+        #recipe_image
+          %img{:src => "#{@recipe.image}", :alt => "#{@recipe.title}", :class => "img-responsive"}
+    .col-sm-6
+      #ingredient-listing
+        %table.table-condensed
+          %th Ingredient
+          %th Quantity
+          %th Measurement
+          - @ingredients.each do |ing|
+            %tr
+              %td= ing.name
+              %td= ing.quantity
+              %td= ing.qty_type
 
-    #procedure
-      %p= text_format(@recipe.procedure)
-
-%a{:href => "#{@recipe.id}/edit", :class => "btn btn-primary"} Edit Recipe
-%a{:href => "/users/#{@recipe.user_id}/recipes", :class => "btn btn-default"} Back to Recipes
+      #procedure
+        %h5 Procedure:
+        %p= text_format(@recipe.procedure)
+.buttons
+  %a{:href => "#{@recipe.id}/edit", :class => "btn btn-primary"} Edit Recipe
+  %a{:href => "/users/#{@recipe.user_id}/recipes", :class => "btn btn-default"} Back to Recipes

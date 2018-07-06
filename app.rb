@@ -5,6 +5,7 @@ require 'shotgun'
 require 'logger'
 
 set :root, File.dirname(__FILE__)
+set :static, true
 
 # Sinatra application
 class App < Sinatra::Application
@@ -38,5 +39,10 @@ class App < Sinatra::Application
 
   configure :development, :production do
     ActiveRecord::Base.logger = Logger.new(STDOUT)
+  end
+
+  #Configure Carrierwave
+  CarrierWave.configure do |config|
+    config.root = File.dirname(__FILE__) + "/public"
   end
 end

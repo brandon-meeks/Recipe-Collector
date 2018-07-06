@@ -1,6 +1,6 @@
 %h2 New Recipe
 
-%form{:action => "/users/#{@recipe.user_id}/recipes/#{@recipe.id}", :method => "post"}
+%form{:action => "/users/#{@recipe.user_id}/recipes/#{@recipe.id}", :method => "post", :enctype => "multipart/form-data"}
   .form-group
     %label(for="title")Title:
     %input{:type => "text", :name => "title", :id => "title", :value => @recipe.title, :class => "form-control"}
@@ -9,8 +9,10 @@
       Author:
       = @recipe.author
   .form-group
-    %label{:for => "image_url"}Image:
-    %input{:type => "text", :name => "image_url", :id => "image_url", :class => "form-control"}
+    %label{:for => "image"}Image:
+    - if @recipe.image.present?
+      %img{:src => "#{@recipe.image}", :alt => "#{@recipe.title}", :height => 100}
+    %input{:type => "file", :name => "image", :id => "image", :class => "form-control"}
   .form-group
     %h4 Ingredients:
     %div#ingredients

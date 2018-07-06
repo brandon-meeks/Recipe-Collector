@@ -95,6 +95,7 @@ post '/users/:id/recipes' do
     user_id: params[:user_id],
     procedure: params[:procedure]
   )
+  recipe.image = params[:image]
   params[:recipe][:ingredient].each do |ing_data|
     ingredient = Ingredient.new(ing_data)
     ingredient.recipe_id = recipe.id
@@ -125,6 +126,7 @@ post '/users/:id/recipes/:recipe_id' do
   recipe = Recipe.find(params[:recipe_id])
   recipe.update(
     title: params[:title],
+    image: params[:image],
     procedure: params[:procedure]
   )
   params[:recipe][:ingredient].each do |ing_data|
