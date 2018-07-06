@@ -147,7 +147,7 @@ post '/users/:id/recipes/:recipe_id' do
     ingredient.update(
       name: ing_data[:name],
       quantity: ing_data[:quantity],
-      qty_type: ing_data[:qty_type]
+      type: ing_data[:qty_type]
     )
   end
   if recipe.save

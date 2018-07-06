@@ -5,6 +5,8 @@ require 'sinatra/activerecord'
 require 'shotgun'
 require 'logger'
 
+ENV['RACK_ENV'] ||= 'development'
+
 set :root, File.dirname(__FILE__)
 set :static, true
 
