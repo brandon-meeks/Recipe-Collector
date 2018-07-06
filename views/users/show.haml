@@ -22,4 +22,7 @@
             %option{:value => "superuser"} Superuser
     .form-group
       %input{:type => "submit", :value => "Update User", :class => "btn btn-primary"}
-      %a{:href => "/users", :class => "btn btn-default"}Cancel
+      -if current_user.admin?
+        %a.btn.btn-primary{:href => "/users"}Cancel
+      - else
+        %a.btn.btn-default{:href => "/users/#{current_user.id}/recipes"}Cancel
