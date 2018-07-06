@@ -17,6 +17,12 @@
     <!- Custom CSS -->
     %link{:rel => "stylesheet", :href => "/stylesheets/application.css"}
 
+    %script{:src => "https://code.jquery.com/jquery-3.3.1.min.js", :integrity => "sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=", :crossorigin => "anonymous"}
+
+    %script
+      setTimeout("$('.alert-success').fadeOut('slow')",3000);
+      setTimeout("$('.alert-danger').fadeOut('slow')",3000);
+
   %body
 
     %nav.navbar.navbar-default
@@ -58,8 +64,6 @@
       #flash_messages
         - flash.keys.each do |type|
           %div{:class => "alert alert-#{type}", :role => "alert"}
-            %button{:type => "button", :class => "close", "data-dismiss" => "alert", "aria-label" => "Close"}
-              %span{"aria-hidden" => true} &times;
             = flash[type]
 
 
@@ -72,6 +76,5 @@
           = Time.now.year
           Meeks Tech, LLC
 
-    %script{:src => "https://code.jquery.com/jquery-3.3.1.slim.min.js", :integrity => "sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo", :crossorigin => "anonymous"}
     %script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js", :integrity => "sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", :crossorigin => "anonymous"}
     %script{:src => "/javascripts/application.js", :type => "text/javascript"}
