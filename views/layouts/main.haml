@@ -31,16 +31,28 @@
 
         %div.collapse.navbar-collapse#navbar-collapse-1
           %ul.nav.navbar-nav.navbar-right
+            - if current_user && current_user.admin?
+              %li
+                %a{:href => "/users"}Users
             - if current_user
               %li
-                %a{:href => "/logout"}Logout
+                %a{:href => "/users/#{current_user.id}/recipes"}Recipes
+              %li.dropdown{:role => "dropdown"}
+                %a.dropdown-toggle{:"data-toggle" => "dropdown", :href => "#", :role => "button", :"aria-hidden" => true, :"aria-expanded" => false}
+                  = current_user.username
+                  %span.caret
+                %ul.dropdown-menu
+                  %li
+                    %a{:href => "/users/#{current_user.id}"}
+                      %i.fa.fa-user-circle
+                      My Profile
+                  %li
+                    %a{:href => "/logout"}
+                      %i.fa.fa-sign-out-alt
+                      Logout
             - else
               %li
                 %a{:href => "/login"}Login
-            %li
-              %a{:href => "#"}Link
-            %li
-              %a{:href => "#"}Link
 
     .container
       #flash_messages

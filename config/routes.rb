@@ -10,7 +10,7 @@ get '/' do
 end
 
 get '/users' do
-  # protected!
+  protected!
   @users = User.all
   haml :"users/index", layout: :"layouts/main"
 end
@@ -25,6 +25,7 @@ post '/users/new' do
   user = User.new(
     username: params[:username],
     email: params[:email],
+    role: paramas[:role],
     password: params[:password]
   )
 
@@ -37,17 +38,23 @@ end
 
 # Upate User routes
 get '/users/:id' do
+  logged_in?
   @user = User.find(params[:id])
   haml :"users/show", layout: :"layouts/main"
 end
 
 post '/users' do
   user = User.find(params[:user_id])
-  user.update(username: params[:username])
+  user.update(
+    username: params[:username],
+    role: params[:role]
+  )
+  redirect '/users'
 end
 
 # Delete User route
 get '/users/:id/delete' do
+  protected!
   user = User.find(params[:id])
   user.delete
   redirect '/users'
@@ -62,6 +69,9 @@ post '/login' do
   authorized_user = User.find_by(username: params[:username])
   if authorized_user && authorized_user.authenticate(params[:password])
     session[:user_id] = authorized_user.id
+    if authorized_user.role == 'superuser'
+      session[:authorized] = true
+    end
     flash[:success] = 'You have successfully signed in'
     redirect "/users/#{session[:user_id]}/recipes"
   else
@@ -77,12 +87,14 @@ end
 
 # Recipe routes
 get '/users/:id/recipes' do
-  @user = User.find_by(id: params[:id])
-  @recipes = Recipe.where(user_id: @user.id)
+  logged_in?
+  @user = User.find_by(id: session[:user_id])
+  @recipes = Recipe.where(user_id: params[:id])
   haml :"recipes/index", layout: :"layouts/main"
 end
 
 get '/users/:id/recipes/new' do
+  logged_in?
   @user = User.find_by(id: session[:user_id])
   haml :"recipes/new", layout: :"layouts/main"
 end
@@ -117,6 +129,7 @@ get '/users/:id/recipes/:recipe_id' do
 end
 
 get '/users/:id/recipes/:recipe_id/edit' do
+  logged_in?
   @recipe = Recipe.find(params[:recipe_id])
   @ingredients = Ingredient.where(recipe_id: @recipe.id)
   haml :"recipes/edit", layout: :"layouts/main"
@@ -144,6 +157,7 @@ post '/users/:id/recipes/:recipe_id' do
 end
 
 get '/users/:id/recipes/:recipe_id/delete' do
+  logged_in?
   user = User.find { session[:user_id] }
   recipe = Recipe.find(params[:recipe_id])
   recipe.delete

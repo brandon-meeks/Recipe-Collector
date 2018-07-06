@@ -1,34 +1,44 @@
-require_relative 'connection'
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you'll amass, the slower it'll run and the greater likelihood for issues).
+#
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define do
-  create_table :users, force: :cascade do |t|
-    t.string    :username
-    t.string    :email
-    t.text      :password_digest
-    t.string    :profile_photo, :default => ''
-    t.datetime  :created_at
+ActiveRecord::Schema.define(version: 2018_07_06_154842) do
+
+  create_table "ingredients", force: :cascade do |t|
+    t.integer "recipe_id", null: false
+    t.string "name"
+    t.float "quantity"
+    t.string "type"
+    t.index ["recipe_id"], name: "index_ingredients_on_recipe_id"
   end
 
-  add_index :users, :username
-
-  create_table :recipes, force: :cascade do |t|
-    t.integer   :user_id, null: false
-    t.string    :title
-    t.string    :author
-    t.integer   :ingredient_id
-    t.text      :procedure
-    t.string    :image
-    t.datetime  :created_at
+  create_table "recipes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "title"
+    t.string "author"
+    t.integer "ingredient_id"
+    t.text "procedure"
+    t.string "image"
+    t.datetime "created_at"
+    t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
-  add_index :recipes, :user_id
-
-  create_table :ingredients, force: :cascade do |t|
-    t.integer   :recipe_id, null: false
-    t.string    :name
-    t.float     :quantity
-    t.string    :qty_type
+  create_table "users", force: :cascade do |t|
+    t.string "username"
+    t.string "email"
+    t.text "password_digest"
+    t.string "profile_photo", default: ""
+    t.datetime "created_at"
+    t.string "role", default: "standard"
+    t.index ["username"], name: "index_users_on_username"
   end
 
-  add_index :ingredients, :recipe_id
 end

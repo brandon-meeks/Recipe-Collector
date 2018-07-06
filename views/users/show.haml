@@ -10,6 +10,16 @@
     .form-group
       %label{:for => "email"}Email:
       %input.form-control{:type => "text", :id => "username", :name => "email", :value => "#{@user.email}", :disabled => true}
+    - if current_user.role == 'superuser'
+      .form-group
+        %label{:for => "role"} Role:
+        %select.form-control{:name => "role"}
+          - if @user.role == 'superuser'
+            %option{:value => "superuser", :selected => true} Superuser
+            %option{:value => "standard"} Standard
+          - elsif @user.role == 'standard'
+            %option{:value => "standard", :selected => true} Standard
+            %option{:value => "superuser"} Superuser
     .form-group
       %input{:type => "submit", :value => "Update User", :class => "btn btn-primary"}
       %a{:href => "/users", :class => "btn btn-default"}Cancel
