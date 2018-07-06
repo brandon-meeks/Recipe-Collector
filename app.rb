@@ -19,15 +19,22 @@ class App < Sinatra::Application
 
     def authorized?
       if session[:user_id]
-
       else
         flash[:warning] = 'You must be logged in to view'
         redirect '/login'
       end
     end
+
+    def current_user
+      @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    end
+
+    def text_format(text)
+      text.to_s.gsub(/\n/, '<br/>')
+    end
   end
 
-  require './config/routes'
+  require_relative './config/routes'
 
   configure :development, :production do
     ActiveRecord::Base.logger = Logger.new(STDOUT)

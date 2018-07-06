@@ -7,14 +7,19 @@
   %p.text-muted
     Created:
     = @recipe.created_at.strftime('%e-%b-%Y')
-    #ingredients
-      %ul
-      - @ingredients.each do |ing|
-        %li= ing.name
-        %li= ing.quantity
-        %li= ing.qty_type
+    #ingredient-listing
+      %table.table-condensed
+        %th Ingredient
+        %th Quantity
+        %th Measurement
+        - @ingredients.each do |ing|
+          %tr
+            %td= ing.name
+            %td= ing.quantity
+            %td= ing.qty_type
 
     #procedure
-      %p= @recipe.procedure
+      %p= text_format(@recipe.procedure)
 
-%a{:href => "/users/#{session[:user_id]}/recipes", :class => "btn btn-default"} Back to Recipes
+%a{:href => "#{@recipe.id}/edit", :class => "btn btn-primary"} Edit Recipe
+%a{:href => "/users/#{@recipe.user_id}/recipes", :class => "btn btn-default"} Back to Recipes

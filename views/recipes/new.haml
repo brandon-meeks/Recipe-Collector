@@ -13,23 +13,21 @@
     %input{:type => "text", :name => "image_url", :id => "image_url", :class => "form-control"}
   .form-group
     %h4 Ingredients:
-    - 2.times do
+    %div#ingredients
       .row
-        .col-sm-7
-          %label{:for => "ing_name"} Name:
+        .col-sm-4
           %input{:type => "text", :name => "recipe[ingredient][][name]", :id => "ing_name", :placeholder => "Flour", :class => "form-control"}
+        .col-sm-1
+          %input{:type => "text", :name => "recipe[ingredient][][quantity]", :id => "ing_qty", :placeholder => "3", :class => "form-control"}
         .col-sm-2
-          %label{:for => "ing_qty"} Quantity:
-          %input{:type => "text", :name => "recipe[ingredient][][quantity]", :id => "ing_qty", :class => "form-control"}
-        .col-sm-3
-          %label{:for => "recipe[ingredient][][qty_type]"} Quantity Type:
-          %select.form-control
+          %select.form-control{:name => "recipe[ingredient][][qty_type]"}
             %option{:value => "cups"} Cups
             %option{:value => "oz"} Ounces
             %option{:value => "lbs"} Lbs
             %option{:value => "grams"} Grams
             %option{:value => "kilograms"} Kilograms
             %options{:value => "liters"} Liters
+  %a.btn.btn-primary{:href => "javascript:void(0)", :id => "add_ing_button"} Add New Ingredient
   .form-group
     %label(for="procedure")Procedure:
     %textarea{:name => "procedure", :id => "procedure", :rows => 10, :cols => 10, :class => "form-control"}

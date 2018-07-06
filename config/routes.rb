@@ -1,12 +1,16 @@
 require_relative '../models/models'
 
+before do
+  current_user
+end
+
 get '/' do
   @page_title = ''
   haml :index, layout: :"layouts/main"
 end
 
 get '/users' do
-  protected!
+  # protected!
   @users = User.all
   haml :"users/index", layout: :"layouts/main"
 end
@@ -59,7 +63,7 @@ post '/login' do
   if authorized_user && authorized_user.authenticate(params[:password])
     session[:user_id] = authorized_user.id
     flash[:success] = 'You have successfully signed in'
-    redirect '/'
+    redirect "/users/#{session[:user_id]}/recipes"
   else
     redirect '/login'
   end
@@ -73,7 +77,7 @@ end
 
 # Recipe routes
 get '/users/:id/recipes' do
-  @user = User.find_by(id: session[:user_id])
+  @user = User.find_by(id: params[:id])
   @recipes = Recipe.where(user_id: @user.id)
   haml :"recipes/index", layout: :"layouts/main"
 end
@@ -109,6 +113,32 @@ get '/users/:id/recipes/:recipe_id' do
   @recipe = Recipe.find(params[:recipe_id])
   @ingredients = Ingredient.where(recipe_id: @recipe.id)
   haml :"recipes/show", layout: :"layouts/main"
+end
+
+get '/users/:id/recipes/:recipe_id/edit' do
+  @recipe = Recipe.find(params[:recipe_id])
+  @ingredients = Ingredient.where(recipe_id: @recipe.id)
+  haml :"recipes/edit", layout: :"layouts/main"
+end
+
+post '/users/:id/recipes/:recipe_id' do
+  recipe = Recipe.find(params[:recipe_id])
+  recipe.update(
+    title: params[:title],
+    procedure: params[:procedure]
+  )
+  params[:recipe][:ingredient].each do |ing_data|
+    ingredient = Ingredient.find(ing_data[:id])
+    ingredient.update(
+      name: ing_data[:name],
+      quantity: ing_data[:quantity],
+      qty_type: ing_data[:qty_type]
+    )
+  end
+  if recipe.save
+    flash[:success] = 'Recipe successfully updated.'
+    redirect "users/#{recipe.user_id}/recipes/#{recipe.id}"
+  end
 end
 
 get '/users/:id/recipes/:recipe_id/delete' do
