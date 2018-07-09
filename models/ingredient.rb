@@ -1,4 +1,4 @@
-require_relative '../db/connection'
+# require_relative '../db/connection'
 
 # The Ingredient model
 class Ingredient < ActiveRecord::Base

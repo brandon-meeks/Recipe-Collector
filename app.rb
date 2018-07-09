@@ -8,6 +8,7 @@ require 'logger'
 ENV['RACK_ENV'] ||= 'development'
 
 set :root, File.dirname(__FILE__)
+set :database_file, 'config/database.yml'
 set :static, true
 
 # Sinatra application

@@ -1,4 +1,4 @@
-require_relative '../db/connection'
+# require_relative '../db/connection'
 require_relative '../config/imageUploader'
 
 class Recipe < ActiveRecord::Base

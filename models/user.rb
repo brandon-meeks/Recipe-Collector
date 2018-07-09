@@ -1,4 +1,4 @@
-require_relative '../db/connection'
+# require_relative '../db/connection'
 
 class User < ActiveRecord::Base
   has_secure_password
