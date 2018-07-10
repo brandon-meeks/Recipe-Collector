@@ -140,6 +140,7 @@ post '/users/:id/recipes/:recipe_id' do
   recipe.update(
     title: params[:title],
     image: params[:image],
+    status: params[:status],
     procedure: params[:procedure]
   )
   params[:recipe][:ingredient].each do |ing_data|
@@ -147,7 +148,7 @@ post '/users/:id/recipes/:recipe_id' do
     ingredient.update(
       name: ing_data[:name],
       quantity: ing_data[:quantity],
-      type: ing_data[:qty_type]
+      qty_type: ing_data[:qty_type]
     )
   end
   if recipe.save

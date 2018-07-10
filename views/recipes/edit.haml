@@ -1,40 +1,48 @@
 %h2 New Recipe
-
 %form{:action => "/users/#{@recipe.user_id}/recipes/#{@recipe.id}", :method => "post", :enctype => "multipart/form-data"}
-  .form-group
-    %label(for="title")Title:
-    %input{:type => "text", :name => "title", :id => "title", :value => @recipe.title, :class => "form-control"}
-  .form-group
-    %p 
-      Author:
-      = @recipe.author
-  .form-group
-    %label{:for => "image"}Image:
-    - if @recipe.image.present?
-      %img{:src => "#{@recipe.image}", :alt => "#{@recipe.title}", :height => 100}
-    %input{:type => "file", :name => "image", :id => "image", :class => "form-control"}
-  .form-group
-    %h4 Ingredients:
-    %div#ingredients
-      - @ingredients.each do |ing|
-        .row
-          .col-sm-4
-            %input{:type => "number", :name => "recipe[ingredient][][id]", :value => ing.id, :hidden => true}
-            %input{:type => "text", :name => "recipe[ingredient][][name]", :id => "ing_name", :value => ing.name, :class => "form-control"}
-          .col-sm-1
-            %input{:type => "text", :name => "recipe[ingredient][][quantity]", :id => "ing_qty", :value => ing.quantity, :class => "form-control"}
-          .col-sm-2
-            %select.form-control{:name => "recipe[ingredient][][qty_type]", :value => ing.qty_type}
-              %option{:value => "cups"} Cups
-              %option{:value => "oz"} Ounces
-              %option{:value => "lbs"} Lbs
-              %option{:value => "grams"} Grams
-              %option{:value => "kilograms"} Kilograms
-              %options{:value => "liters"} Liters
-  .form-group
-    %label(for="procedure")Procedure:
-    %textarea{:name => "procedure", :id => "procedure", :rows => 10, :cols => 10, :class => "form-control"}
-      = @recipe.procedure
-  .form-group
-    %input{:type => "submit", :value => "Update Recipe", :class => "btn btn-primary"}
-    %a{:href => "/users/#{session[:user_id]}/recipes", :class => "btn btn-default"} Cancel
+  .row
+    .col-sm-8
+      .form-group
+        %label(for="title")Title:
+        %input{:type => "text", :name => "title", :id => "title", :value => @recipe.title, :class => "form-control"}
+      .form-group
+        %p 
+          Author:
+          = @recipe.author
+      .form-group
+        %label{:for => "image"}Image:
+        - if @recipe.image.present?
+          %img{:src => "#{@recipe.image}", :alt => "#{@recipe.title}", :height => 100}
+        %input{:type => "file", :name => "image", :id => "image", :class => "form-control"}
+      .form-group
+        %h4 Ingredients:
+        %div#ingredients
+          - @ingredients.each do |ing|
+            .row
+              .col-sm-4
+                %input{:type => "number", :name => "recipe[ingredient][][id]", :value => ing.id, :hidden => true}
+                %input{:type => "text", :name => "recipe[ingredient][][name]", :id => "ing_name", :value => ing.name, :class => "form-control"}
+              .col-sm-1
+                %input{:type => "text", :name => "recipe[ingredient][][quantity]", :id => "ing_qty", :value => ing.quantity, :class => "form-control"}
+              .col-sm-2
+                %select.form-control{:name => "recipe[ingredient][][qty_type]", :value => ing.qty_type}
+                  %option{:value => "cups"} Cups
+                  %option{:value => "oz"} Ounces
+                  %option{:value => "lbs"} Lbs
+                  %option{:value => "grams"} Grams
+                  %option{:value => "kilograms"} Kilograms
+                  %options{:value => "liters"} Liters
+      .form-group
+        %label(for="procedure")Procedure:
+        %textarea{:name => "procedure", :id => "procedure", :rows => 10, :cols => 10, :class => "form-control"}
+          = @recipe.procedure
+    .col-sm-4
+      .form-group
+        %label{:for => "status"} Status
+        %input{:type => "hidden", :name => "status", :value => "draft"}
+        %input{:checked => (@recipe.status == "published" ? true : false), :type => "checkbox", :name => "status", :id => "status", :value => "published", :"data-toggle" => "toggle", :"data-on" => "Published", :"data-off" => "Draft"}
+  .row
+    .col-sm-12
+      .form-group
+        %input{:type => "submit", :value => "Update Recipe", :class => "btn btn-primary"}
+        %a{:href => "/users/#{session[:user_id]}/recipes", :class => "btn btn-default"} Cancel

@@ -11,23 +11,31 @@
   
   .row
     - if @recipe.image.present?
-      .col-sm-6
+      .col-sm-12
         #recipe_image
           %img{:src => "#{@recipe.image}", :alt => "#{@recipe.title}", :class => "img-responsive"}
+  .row
     .col-sm-6
       #ingredient-listing
-        %table.table-condensed
-          %th Ingredient
-          %th Quantity
-          %th Measurement
+        %h3 Ingredients
+        -# %table.table-condensed
+        -#   %th Ingredient
+        -#   %th Quantity
+        -#   %th Measurement
+        -#   - @ingredients.each do |ing|
+        -#     %tr
+        -#       %td= ing.name
+        -#       %td= ing.quantity
+        -#       %td= ing.qty_type
+        %ul#ingredient_list
           - @ingredients.each do |ing|
-            %tr
-              %td= ing.name
-              %td= ing.quantity
-              %td= ing.qty_type
-
+            %li
+              = ing.name
+              = ing.quantity
+              = ing.qty_type
+    .col-sm-6
+      %h3 Procedure:         
       #procedure
-        %h5 Procedure:
         %p= text_format(@recipe.procedure)
 .buttons
   %a{:href => "#{@recipe.id}/edit", :class => "btn btn-primary"} Edit Recipe

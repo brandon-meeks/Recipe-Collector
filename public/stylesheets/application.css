@@ -5,12 +5,41 @@
   margin-top: 100px;
 }
 
+#recipe {
+  width: 66%;
+  margin: 0 auto;
+  text-align: center;
+}
+
 #recipe_image img {
   max-height: 300px;
+  margin: 0 auto;
+}
+
+#ingredient_list {
+  background-color: #F9F9F9;
+  padding: 20px;
+  list-style: none;
+}
+
+#ingredient_list li {
+  font-size: 18px;
+  padding: 5px;
+  border-bottom: 1px dashed #1b1b1b;
+}
+
+#procedure {
+  background-color: #F9F9F9;
+  padding: 20px;
+  font-size: 18px;
 }
 
 .buttons {
   padding: 25px;
+}
+
+.status {
+  padding: 0;
 }
 
 .footer {

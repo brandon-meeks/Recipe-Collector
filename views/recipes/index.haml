@@ -7,17 +7,29 @@
   Create Recipe
 
 #recipes
-  %table.table
-    %th ID
-    %th Recipe Title
-    %th Created At
-    %th Actions
+  %table.table.table-striped.text-center
+    %th.text-center ID
+    %th.text-center Recipe Title
+    %th.text-center Ingredient Count
+    %th.text-center Has Image
+    %th.text-center Status
+    %th.text-center Created At
+    %th.text-center Actions
     - @recipes.each do |recipe|
       %tr
         %td= recipe.id
         %td
           %a{:href => "recipes/#{recipe.id}"}
             = recipe.title
+        %td= recipe.ingredients.count
+        %td
+          - if recipe.image?
+            Yes
+          - else
+            No
+        %td
+          %p.label{:class => (recipe.status == "published" ? "label-success published" : "text-danger")}
+            = recipe.status
         %td= recipe.created_at.strftime('%e-%b-%Y')
         %td
           %a{:href => "/users/#{@user.id}/recipes/#{recipe.id}/edit"}
