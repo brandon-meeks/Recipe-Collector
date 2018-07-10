@@ -15,6 +15,15 @@
           %img{:src => "#{@recipe.image}", :alt => "#{@recipe.title}", :height => 100}
         %input{:type => "file", :name => "image", :id => "image", :class => "form-control"}
       .form-group
+        %label(for="category") Category:
+        %select{:name => "category", :class => "form-control"}
+          %option{:selected => (@recipe.category == "Breakfast" ? true : false), :value => "Breakfast"} Breakfast
+          %option{:selected => (@recipe.category == "Dinner" ? true : false), :value => "Dinner"} Dinner
+          %option{:selected => (@recipe.category == "Desserts" ? true : false), :value => "Desserts"} Desserts
+          %option{:selected => (@recipe.category == "Lunch" ? true : false), :value => "Lunch"} Lunch
+          %option{:selected => (@recipe.category == "Snacks" ? true : false), :value => "Snacks"} Snacks
+          %option{:selected => (@recipe.category == "Soups" ? true : false), :value => "Soups"} Soups
+      .form-group
         %h4 Ingredients:
         %div#ingredients
           - @ingredients.each do |ing|
@@ -26,12 +35,12 @@
                 %input{:type => "text", :name => "recipe[ingredient][][quantity]", :id => "ing_qty", :value => ing.quantity, :class => "form-control"}
               .col-sm-2
                 %select.form-control{:name => "recipe[ingredient][][qty_type]", :value => ing.qty_type}
-                  %option{:value => "cups"} Cups
-                  %option{:value => "oz"} Ounces
-                  %option{:value => "lbs"} Lbs
-                  %option{:value => "grams"} Grams
-                  %option{:value => "kilograms"} Kilograms
-                  %options{:value => "liters"} Liters
+                  %option{:selected => (ing.qty_type == "cups" ? true : false), :value => "cups"} Cups
+                  %option{:selected => (ing.qty_type == "oz" ? true : false), :value => "oz"} Ounces
+                  %option{:selected => (ing.qty_type == "lbs" ? true : false), :value => "lbs"} Lbs
+                  %option{:selected => (ing.qty_type == "grams" ? true : false), :value => "grams"} Grams
+                  %option{:selected => (ing.qty_type == "kilograms" ? true : false), :value => "kilograms"} Kilograms
+                  %options{:selected => (ing.qty_type == "liter" ? true : false), :value => "liters"} Liters
       .form-group
         %label(for="procedure")Procedure:
         %textarea{:name => "procedure", :id => "procedure", :rows => 10, :cols => 10, :class => "form-control"}

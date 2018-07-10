@@ -10,6 +10,7 @@
   %table.table.table-striped.text-center
     %th.text-center ID
     %th.text-center Recipe Title
+    %th.text-center Category
     %th.text-center Ingredient Count
     %th.text-center Has Image
     %th.text-center Status
@@ -21,6 +22,7 @@
         %td
           %a{:href => "recipes/#{recipe.id}"}
             = recipe.title
+        %td= recipe.category
         %td= recipe.ingredients.count
         %td
           - if recipe.image?
@@ -28,7 +30,7 @@
           - else
             No
         %td
-          %p.label{:class => (recipe.status == "published" ? "label-success published" : "text-danger")}
+          %p.label{:class => (recipe.status == "published" ? "label-success published" : "label-danger")}
             = recipe.status
         %td= recipe.created_at.strftime('%e-%b-%Y')
         %td

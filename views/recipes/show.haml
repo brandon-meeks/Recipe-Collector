@@ -15,6 +15,9 @@
         #recipe_image
           %img{:src => "#{@recipe.image}", :alt => "#{@recipe.title}", :class => "img-responsive"}
   .row
+    .col-sm-6.col-sm-offset-3
+      %p.badge.category= @recipe.category
+  .row
     .col-sm-6
       #ingredient-listing
         %h3 Ingredients

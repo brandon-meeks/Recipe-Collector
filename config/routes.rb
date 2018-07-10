@@ -105,6 +105,7 @@ post '/users/:id/recipes' do
     title: params[:title],
     author: params[:author],
     user_id: params[:user_id],
+    category: params[:category],
     procedure: params[:procedure]
   )
   recipe.image = params[:image]
@@ -141,6 +142,7 @@ post '/users/:id/recipes/:recipe_id' do
     title: params[:title],
     image: params[:image],
     status: params[:status],
+    category: params[:category],
     procedure: params[:procedure]
   )
   params[:recipe][:ingredient].each do |ing_data|

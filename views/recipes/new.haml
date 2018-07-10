@@ -12,6 +12,16 @@
     %label{:for => "image"}Image:
     %input{:type => "file", :name => "image", :id => "image", :class => "form-control"}
   .form-group
+    %label(for="category") Category:
+    %select{:name => "category", :class => "form-control"}
+      %option{:value => "Breakfast"} Breakfast
+      %option{:value => "Dinner"} Dinner
+      %option{:value => "Desserts"} Desserts
+      %option{:value => "Lunch"} Lunch
+      %option{:value => "Snacks"} Snacks
+      %option{:value => "Soups"} Soups
+      
+  .form-group
     %h4 Ingredients:
     %div#ingredients
       .row
